@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pengingat Sholat</title>
   <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("serviceWorker.js")
+      .then(() => console.log("Service Worker registered"));
+  }
+</script>
 </head>
 <body>
   <div class="app-container">
@@ -68,4 +75,5 @@
 <!-- Keterkaitan dengan OOP:
 - Kartu waktu sholat yg muncul di <div id="prayer-list"> adalah hasil render dr objek turunan kls Reminder (PrayerTime).
 - Semua interaksi dan update pd elemen HTML ini dikendalikan olh JS yg memanfaatkan konsep OOP (abstraksi, pewarisan, enkapsulasi, polimorfisme).
+
 -->
