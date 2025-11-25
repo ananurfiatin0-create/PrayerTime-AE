@@ -1,0 +1,17 @@
+{
+  "name": "PrayerTime-AE",
+  "short_name": "PrayerTime",
+  "description": "Aplikasi Pengingat Sholat",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b1a2e",
+  "theme_color": "#1b3b5f",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
