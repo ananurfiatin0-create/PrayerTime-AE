@@ -1,0 +1,211 @@
+/* Tampilan Umum (font, warna, background gmbr, efek kca*/
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
+
+  /* Background gambar default (contoh Ka'bah) */
+  background-image: url('https://i.pinimg.com/736x/87/c5/67/87c567ad54568dcb6cf247d5f5ab3805.jpg');
+  background-size: cover;       /* penuh layar */
+  background-position: center;  /* rata tengah */
+  background-attachment: fixed; /* tetap saat scroll */
+
+  position: relative;
+}
+
+/*container utama apl, efek transparan dn blur kaca*/
+.app-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+
+  /* transparan dengan efek kaca */
+  background: rgba(255, 255, 255, 0.555); /* putih semi transparan */
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  backdrop-filter: blur(3px); /* efek blur kaca */
+}
+
+/*mode gelap (wrna background dn teks berubah)*/
+body.dark-mode .app-container {
+  background: rgba(30, 30, 30, 0.285); /* hitam semi transparan */
+  backdrop-filter: blur(3px);
+}
+
+/* Jam, tgl & Kalender H*/
+#clock {
+  font-size: 2em;
+  margin: 10px 0;
+}
+
+#date, #hijri, #location-info {
+  margin: 5px 0;
+  font-size: 0.95em;
+  color: #555;
+}
+
+/*Countdown Sholat Berikutnya (Atas) */
+.countdown-top {
+  text-align: center;
+  font-size: 0.85em;   /* kecil, setara teks lokasi/tanggal */
+  color: #555;
+  margin: 8px auto 12px auto;
+  padding: 6px 10px;
+  max-width: 300px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.countdown-top #next-prayer-time {
+  font-weight: normal;
+  margin-bottom: 2px;
+}
+
+.countdown-top #next-prayer-countdown {
+  font-weight: normal;
+  color: #555;
+}
+
+/* Daftar Waktu Sholat (grid kartu)*/
+.prayer-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.prayer-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.prayer-card img {
+  width: 40px;
+  height: 40px;
+  transition: filter 0.3s ease;
+}
+
+.prayer-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/*Tombol kontrol apl*/
+.buttons {
+  margin-top: 20px;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background: #3498db;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #2980b9;
+}
+
+/*tombol mode asli dn stop adzan*/
+#back-to-real {
+  background: #27ae60; /* hijau */
+}
+#back-to-real:hover {
+  background: #1e8449;
+}
+
+/* Tombol Stop Adzan khusus */
+#stop-adzan {
+  background: #e74c3c;
+}
+#stop-adzan:hover {
+  background: #c0392b;
+}
+
+/* Mode Gelap(wrna dn filter berubah */
+body.dark-mode {
+  color: #f4f4f4;
+}
+
+/* Overlay gelap di atas background saat dark mode */
+body.dark-mode::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: -1;
+}
+
+body.dark-mode .app-container {
+  background: rgba(30, 30, 30, 0.85); /* hitam transparan */
+}
+
+body.dark-mode .prayer-card {
+  background: #2c2c2c;
+  color: #f4f4f4;
+}
+
+body.dark-mode button {
+  background: #555;
+}
+body.dark-mode button:hover {
+  background: #777;
+}
+
+body.dark-mode .prayer-card img {
+  filter: invert(1);
+}
+
+body.dark-mode .countdown-top {
+  background: rgba(40,40,40,0.85);
+  border: 1px solid #444;
+  color: #f4f4f4;
+}
+body.dark-mode .countdown-top #next-prayer-countdown {
+  color: #f4f4f4;
+}
+
+/*Penanda Waktu Sholat Aktif */
+.prayer-card.active {
+  border: 2px solid #f39c12;
+  background: #fff8e5;
+  box-shadow: 0 0 15px #f1c40f;
+}
+.prayer-card.active img {
+  filter: drop-shadow(0 0 10px #f39c12);
+}
+.prayer-card.active h3,
+.prayer-card.active p {
+  color: #f39c12;
+}
+
+/*Alert Box (Notifikasi Visual) */
+.alert-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #3498db;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #2980b9;
+  font-size: 1em;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.alert-box.show {
+  opacity: 1;
+}
