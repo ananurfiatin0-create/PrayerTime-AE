@@ -5,75 +5,108 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pengingat Sholat</title>
   <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("serviceWorker.js")
-      .then(() => console.log("Service Worker registered"));
-  }
-</script>
+  <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
+
   <div class="app-container">
+
     <h1>⏰ Pengingat Sholat</h1>
 
-    <!-- Jam & Kalender 
-     diisi otomatis dr JS dg waktu, tgl,dn kalender hijriyah-->
+    <!-- Jam n kalender -->
     <div class="datetime">
       <div id="clock"></div>
       <div id="date"></div>
       <div id="hijri"></div>
     </div>
-    <!--nama kota/lokasi pengguna, dr API olh JS-->
+
+    <!-- Lokasi -->
     <div id="location-info">📍 Lokasi: sedang dimuat...</div>
 
-    <!-- Countdown Sholat Berikutnya -->
-  <div class="countdown-box">
-    <h2>⏳ Menuju Sholat Berikutnya</h2>
-    <div id="next-prayer-time"></div>
-    <div id="next-prayer-countdown"></div>
-  </div>
+    <!-- Countdown -->
+    <div class="countdown-box">
+      <h2>⏳ Menuju Sholat Berikutnya</h2>
+      <div id="next-prayer-time"></div>
+      <div id="next-prayer-countdown"></div>
+    </div>
 
-    <!-- Daftar Waktu Sholat 
-     objek prayertime OOP dr JS, setiap waktu sholat ditampilkan-->
-    <div id="prayer-list" class="prayer-list"></div>
+    <!-- PRAYER LIST + SKELETON  -->
+    <div id="prayer-list" class="prayer-list">
 
-    <!-- Tombol Kontrol 
-     notifikasi, stop adzan, ubah tema, mode aslo/demo
-     event handler tombol diatur d JS-->
+      <!-- Skeleton Card 1 -->
+      <div class="prayer-card skeleton">
+        <div class="sk-left"></div>
+        <div class="sk-right">
+          <div class="sk-title"></div>
+          <div class="sk-time"></div>
+        </div>
+      </div>
+
+      <!-- Skeleton Card 2 -->
+      <div class="prayer-card skeleton">
+        <div class="sk-left"></div>
+        <div class="sk-right">
+          <div class="sk-title"></div>
+          <div class="sk-time"></div>
+        </div>
+      </div>
+
+      <!-- Skeleton Card 3 -->
+      <div class="prayer-card skeleton">
+        <div class="sk-left"></div>
+        <div class="sk-right">
+          <div class="sk-title"></div>
+          <div class="sk-time"></div>
+        </div>
+      </div>
+
+      <!-- Skeleton Card 4 -->
+      <div class="prayer-card skeleton">
+        <div class="sk-left"></div>
+        <div class="sk-right">
+          <div class="sk-title"></div>
+          <div class="sk-time"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tombol Kontrol -->
     <div class="buttons">
       <button id="notif-button">Aktifkan Notifikasi</button>
       <button id="back-to-real">Kembali ke Mode Asli</button>
-
       <button id="stop-adzan">Stop Adzan</button>
       <button id="theme-toggle">Ubah Tema</button>
     </div>
 
-    <!-- Pengaturan Jam Simulasi 
-     input dn tombol untk mengatur jam demo-->
+    <!-- Mode Demo -->
     <div class="buttons">
       <label for="demo-time">Set Jam Simulasi:</label>
       <input type="time" id="demo-time">
       <button id="apply-demo">Terapkan Jam Demo</button>
     </div>
+
   </div>
 
   <!-- Audio -->
   <audio id="audio-imsak" src="audio/imsak.mp3" preload="auto"></audio>
-  <audio id="audio-subuh" src="audio/adzan subuh.mp3" preload="auto"></audio>
-  <audio id="audio-dhuhur" src="audio/adzan biasa.mp3" preload="auto"></audio>
-  <audio id="audio-ashar" src="audio/adzan biasa.mp3" preload="auto"></audio>
-  <audio id="audio-maghrib" src="audio/adzan biasa.mp3" preload="auto"></audio>
-  <audio id="audio-isya" src="audio/adzan biasa.mp3" preload="auto"></audio>
-  <audio id="adzan-biasa" src="audio/adzan biasa.mp3" preload="auto"></audio>
+  <audio id="audio-subuh" src="audio/adzan-subuh.mp3" preload="auto"></audio>
+  <audio id="suara-bedug" src="audio/bedug.mp3" preload="auto"></audio>
+  <audio id="audio-dhuhur" src="audio/adzan-biasa.mp3" preload="auto"></audio>
+  <audio id="audio-ashar" src="audio/adzan-biasa.mp3" preload="auto"></audio>
+  <audio id="audio-maghrib" src="audio/adzan-biasa.mp3" preload="auto"></audio>
+  <audio id="audio-isya" src="audio/adzan-biasa.mp3" preload="auto"></audio>
 
-  <!--menghubungkan html dg kode JS yg mengatur logika apl dn OOP-->
+  <!-- Script -->
   <script src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('serviceWorker.js')
+        .then(reg => console.log('SW registered', reg))
+        .catch(err => console.error('SW failed', err));
+    }
+  </script>
+
 </body>
 </html>
-
-<!-- Keterkaitan dengan OOP:
-- Kartu waktu sholat yg muncul di <div id="prayer-list"> adalah hasil render dr objek turunan kls Reminder (PrayerTime).
-- Semua interaksi dan update pd elemen HTML ini dikendalikan olh JS yg memanfaatkan konsep OOP (abstraksi, pewarisan, enkapsulasi, polimorfisme).
-
--->

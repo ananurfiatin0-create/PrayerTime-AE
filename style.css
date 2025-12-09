@@ -1,56 +1,76 @@
-/* Tampilan Umum (font, warna, background gmbr, efek kca*/
+/*GLOBAL STYLE & BACKGROUND FIXED*/
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   color: #333;
-  transition: background 0.3s, color 0.3s;
-
-  /* Background gambar default (contoh Ka'bah) */
-  background-image: url('https://i.pinimg.com/736x/87/c5/67/87c567ad54568dcb6cf247d5f5ab3805.jpg');
-  background-size: cover;       /* penuh layar */
-  background-position: center;  /* rata tengah */
-  background-attachment: fixed; /* tetap saat scroll */
-
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background: none;
   position: relative;
 }
 
-/*container utama apl, efek transparan dn blur kaca*/
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('bg/clock-tower-3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+/*APP CONTAINER (GLASS EFFECT) */
 .app-container {
   max-width: 600px;
   margin: auto;
   padding: 20px;
   text-align: center;
-
-  /* transparan dengan efek kaca */
-  background: rgba(255, 255, 255, 0.555); /* putih semi transparan */
+  background: rgba(255, 255, 255, 0.55);
   border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  backdrop-filter: blur(3px); /* efek blur kaca */
-}
-
-/*mode gelap (wrna background dn teks berubah)*/
-body.dark-mode .app-container {
-  background: rgba(30, 30, 30, 0.285); /* hitam semi transparan */
   backdrop-filter: blur(3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Jam, tgl & Kalender H*/
+body.dark-mode .app-container {
+  background: rgba(30, 30, 30, 0.65);
+}
+
+/*TEXT COLOR FIX (GLOBAL) */
+h1, h2 {
+  color: #222;
+}
+
+body.dark-mode h1,
+body.dark-mode h2 {
+  color: #fff;
+}
+
+/*CLOCK, DATE, HIJRI*/
 #clock {
-  font-size: 2em;
-  margin: 10px 0;
+  color: inherit;
 }
 
 #date, #hijri, #location-info {
   margin: 5px 0;
   font-size: 0.95em;
-  color: #555;
+  color: #333;
 }
 
-/*Countdown Sholat Berikutnya (Atas) */
+body.dark-mode #clock,
+body.dark-mode #date,
+body.dark-mode #hijri,
+body.dark-mode #location-info {
+  color: #fff;
+}
+
+/* COUNTDOWN (TIDAK DIUBAH) */
 .countdown-top {
   text-align: center;
-  font-size: 0.85em;   /* kecil, setara teks lokasi/tanggal */
+  font-size: 0.85em;
   color: #555;
   margin: 8px auto 12px auto;
   padding: 6px 10px;
@@ -61,35 +81,52 @@ body.dark-mode .app-container {
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
-.countdown-top #next-prayer-time {
-  font-weight: normal;
-  margin-bottom: 2px;
+body.dark-mode .countdown-top {
+  background: rgba(40,40,40,0.85);
+  border: 1px solid #444;
+  color: #f4f4f4;
 }
 
-.countdown-top #next-prayer-countdown {
-  font-weight: normal;
-  color: #555;
+/*FIX WARNA TEKS COUNTDOWN*/
+.countdown-box h2,
+#next-prayer-time,
+#next-prayer-countdown {
+  color: #222; /* mode terang */
 }
 
-/* Daftar Waktu Sholat (grid kartu)*/
+body.dark-mode .countdown-box h2,
+body.dark-mode #next-prayer-time,
+body.dark-mode #next-prayer-countdown {
+  color: #fff !important; /* mode gelap */
+}
+
+/*PRAYER LIST (GRID)*/
 .prayer-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(4, 1fr); /* Desktop: 4 kolom */
+  gap: 15px;
   margin-top: 20px;
+  justify-items: center;
+  align-items: center;
 }
 
+/*PRAYER CARD*/
 .prayer-card {
+  width: 100%;
+  max-width: 140px; /* batas maksimum card */
   background: #fff;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  padding: 15px 10px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
   transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .prayer-card img {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
+  margin-bottom: 8px;
   transition: filter 0.3s ease;
 }
 
@@ -98,7 +135,31 @@ body.dark-mode .app-container {
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-/*Tombol kontrol apl*/
+body.dark-mode .prayer-card {
+  background: #2c2c2c;
+  color: #f4f4f4;
+}
+
+body.dark-mode .prayer-card img {
+  filter: invert(1);
+}
+
+.prayer-card.active {
+  border: 2px solid #f39c12;
+  background: #fff8e5;
+  box-shadow: 0 0 15px #f1c40f;
+}
+
+.prayer-card.active img {
+  filter: drop-shadow(0 0 10px #f39c12);
+}
+
+.prayer-card.active h3,
+.prayer-card.active p {
+  color: #f39c12;
+}
+
+/*BUTTONS*/
 .buttons {
   margin-top: 20px;
 }
@@ -118,44 +179,11 @@ button:hover {
   background: #2980b9;
 }
 
-/*tombol mode asli dn stop adzan*/
-#back-to-real {
-  background: #27ae60; /* hijau */
-}
-#back-to-real:hover {
-  background: #1e8449;
-}
+#back-to-real { background: #27ae60; }
+#back-to-real:hover { background: #1e8449; }
 
-/* Tombol Stop Adzan khusus */
-#stop-adzan {
-  background: #e74c3c;
-}
-#stop-adzan:hover {
-  background: #c0392b;
-}
-
-/* Mode Gelap(wrna dn filter berubah */
-body.dark-mode {
-  color: #f4f4f4;
-}
-
-/* Overlay gelap di atas background saat dark mode */
-body.dark-mode::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: -1;
-}
-
-body.dark-mode .app-container {
-  background: rgba(30, 30, 30, 0.85); /* hitam transparan */
-}
-
-body.dark-mode .prayer-card {
-  background: #2c2c2c;
-  color: #f4f4f4;
-}
+#stop-adzan { background: #e74c3c; }
+#stop-adzan:hover { background: #c0392b; }
 
 body.dark-mode button {
   background: #555;
@@ -164,34 +192,37 @@ body.dark-mode button:hover {
   background: #777;
 }
 
-body.dark-mode .prayer-card img {
-  filter: invert(1);
+/*DARK MODE OVERLAY */
+body.dark-mode::before {
+  background-image: url('bg/clock-tower-3.png');
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(0,0,0,0.6);
+  background-blend-mode: multiply;
 }
 
-body.dark-mode .countdown-top {
-  background: rgba(40,40,40,0.85);
-  border: 1px solid #444;
-  color: #f4f4f4;
-}
-body.dark-mode .countdown-top #next-prayer-countdown {
-  color: #f4f4f4;
-}
-
-/*Penanda Waktu Sholat Aktif */
-.prayer-card.active {
-  border: 2px solid #f39c12;
-  background: #fff8e5;
-  box-shadow: 0 0 15px #f1c40f;
-}
-.prayer-card.active img {
-  filter: drop-shadow(0 0 10px #f39c12);
-}
-.prayer-card.active h3,
-.prayer-card.active p {
-  color: #f39c12;
+/*TOAST NOTIFICATION*/
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #333;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 9999;
+  font-size: 14px;
 }
 
-/*Alert Box (Notifikasi Visual) */
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/*ALERT BOX*/
 .alert-box {
   position: fixed;
   bottom: 20px;
@@ -206,6 +237,117 @@ body.dark-mode .countdown-top #next-prayer-countdown {
   opacity: 0;
   transition: opacity 0.5s ease;
 }
+
 .alert-box.show {
   opacity: 1;
+}
+
+/*SKELETON*/
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap; /* supaya rapi di mobile */
+}
+
+.skeleton div {
+  background: #e2e2e2;
+  border-radius: 6px;
+}
+
+.sk-left {
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+}
+
+.sk-right {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sk-title {
+  width: 65%;
+  height: 14px;
+}
+
+.sk-time {
+  width: 45%;
+  height: 12px;
+}
+
+.skeleton::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -150px;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+  animation: shimmer 1.3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(300px); }
+}
+
+body.dark-mode .skeleton div {
+  background: #444;
+}
+
+body.dark-mode .skeleton::before {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+}
+
+/*SET JAM SIMULASI*/
+label[for="demo-time"] {
+  color: #222;
+}
+
+body.dark-mode label[for="demo-time"] {
+  color: #fff;
+}
+
+#demo-time {
+  background: #fff;
+  color: #222;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+body.dark-mode #demo-time {
+  background: #444;
+  color: #fff;
+  border: 1px solid #666;
+}
+
+/*MOBILE RESPONSIVE*/
+@media (max-width: 480px) {
+  .prayer-list {
+    grid-template-columns: repeat(2, 1fr); /* HP: 2 kolom */
+    gap: 12px;
+  }
+  .prayer-card {
+    max-width: 100%;
+    padding: 12px 8px;
+  }
+  .prayer-card img {
+    width: 35px;
+    height: 35px;
+  }
+  .app-container {
+    padding: 15px;
+    margin: 10px;
+  }
+  .countdown-top {
+    max-width: 90%;
+    font-size: 0.8em;
+    padding: 5px 8px;
+  }
 }
